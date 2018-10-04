@@ -19,7 +19,7 @@ proxies = {
 
 r=requests.get(url_kopytow)
 
-soup = BeautifulSoup(r.content,'html.parser')
+soup = BeautifulSoup(r.content.decode('iso8859-2').encode('utf-8'), 'html.parser')
 
 table = soup.find('table')
 rows = table.findAll('tr')
@@ -29,8 +29,8 @@ dane = {}
 for tr in rows:
     cells=tr.findAll('td')
     if len(cells)>1:
-        parametr = cells[0]
-        wartosc = cells[1]
+        parametr = cells[0].get_text()
+        wartosc = cells[1].get_text()
         print("Wiersz:  {0} {1} ".format(parametr, wartosc))
     # print(cells)
 
