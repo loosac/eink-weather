@@ -1,6 +1,8 @@
+import datetime
 import requests
+import PIL
+
 from bs4 import BeautifulSoup
-#import csv
 
 
 urlcam='https://www.traxelektronik.pl/pogoda/kamery/kamera.php?pkamnum='
@@ -11,36 +13,42 @@ pulawska_id = 138
 
 url_kopytow = urlcam + str(kopytow_id)
 
-proxies = {
-  'http': 'http://xproxy.i:8090',
-  'https': 'http://xproxy.i:8090',
+x = datetime.datetime.now()
 
-}
+# pobieramy dane o lokalizacji, zwracamy liste
+def pobierzCam(url_id,label):
 
-r=requests.get(url_kopytow)
+    print(x)
+    wynik=[x , label]
 
-soup = BeautifulSoup(r.content.decode('iso8859-2').encode('utf-8'), 'html.parser')
+    # print('Pobieram {0}'.format(label))
+    r=requests.get(urlcam+str(url_id))
+    soup = BeautifulSoup(r.content.decode('iso8859-2').encode('utf-8'), 'html.parser')
+    table = soup.find('table')
+    rows = table.findAll('tr')
+    # print(rows)
 
-table = soup.find('table')
-rows = table.findAll('tr')
-# print(rows)
+    dane = {}
+    for tr in rows:
+        cells=tr.findAll('td')
+        if len(cells)>1:
+            parametr = cells[0].get_text()
+            # stripujemy z whitespaceow na poczatku linii
+            wynik.append(cells[1].get_text().strip())
+            # print("Wiersz:  {0} {1} ".format(parametr, wartosc))
+            #print(":{1}".format(parametr, wartosc))
+    return (wynik)
 
-dane = {}
-for tr in rows:
-    cells=tr.findAll('td')
-    if len(cells)>1:
-        parametr = cells[0].get_text()
-        wartosc = cells[1].get_text()
-        print("Wiersz:  {0} {1} ".format(parametr, wartosc))
-    # print(cells)
+def rysujobraz():
+    EPD_WIDTH = 640
+    EPD_HEIGHT = 384
+    obraz = Image.new('1', (EPD_WIDTH, EPD_HEIGHT), 1)  # 1: clear the frame
+    draw = ImageDraw.Draw(obraz)
+    # czcionki
+    f_ = ImageFont.truetype('fontit/ClearSans-Regular.ttf', 18)
+    f_iso = ImageFont.truetype('fontit/unispace.ttf', 44)
+    f_symbol_p = ImageFont.truetype('fontit/WeatherIcons.ttf', 40)
 
-# inmates_list = []
-#
-# for table_row in soup.select("table.inmatesList tr"):
-#     cells = table_row.findAll('td')
-#     if len(cells) > 0:
-#         parametr = cells[0].text.strip()
-#         wartosc =  cells[1].text.strip()
-#         inmate = {'parametr': parametr, 'wartosc': wartosc}
-#         inmates_list.append(inmate)
-#         print ("Added {0} {1} to the list".format(parametr, wartosc))
+
+print(pobierzCam(141,'Kopytow'))
+print(pobierzCam(138,'Pulawska'))
