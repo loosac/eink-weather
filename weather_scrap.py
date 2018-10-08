@@ -21,6 +21,9 @@ pulawska_id = 138
 obraz_name ='output.jpg'
 obr_powietrze='_ikony/powietrze.jpg'
 obr_asfalt='_ikony/droga.jpg'
+obr_sucha='_ikony/sucha.jpg'
+obr_mokra='_ikony/mokra.jpg'
+obr_szklanka='_ikony/ryzyko_lodu.jpg'
 url_kopytow = urlcam + str(kopytow_id)
 
 x = datetime.datetime.now()
@@ -89,8 +92,24 @@ def rysujobraz():
 
         draw.text((xpos+80, MARG_Y + 130), str(stacja[2]), font=f_temp)
         obraz.paste(asfalt, (int(xpos), int(MARG_Y + 100)))
+        draw.text((xpos, MARG_Y + 180), "Jezdnia " + str(stacja[4]), font=f_)
+        tempstring=str(stacja[1])
+        tempfloat=float(tempstring[0:len(tempstring)-2])
 
-        draw.text((xpos, MARG_Y + 200), "Wilg. pow: "+str(stacja[3]), font=f_temp)
+
+        print(tempfloat)
+        if (str(stacja[4]) == "sucha"):
+            sucha = Image.open(obr_sucha, 'r')
+            obraz.paste(sucha, (int(xpos), int(MARG_Y + 200)))
+        else:
+            mokra = Image.open(obr_mokra, 'r')
+            obraz.paste(mokra, (int(xpos), int(MARG_Y + 200)))
+
+        if(tempfloat <= 0.5):
+            szklanka = Image.open(obr_szklanka, 'r')
+            obraz.paste(szklanka, (int(xpos)+80, int(MARG_Y + 200)))
+
+        # draw.text((xpos, MARG_Y + 200), "Sezdnia: "+str(stacja[4]), font=f_temp)
         xpos=EPD_WIDTH/4+5
 
     # Linie:
