@@ -121,11 +121,11 @@ def rysujobraz():
     xpos=5
     for stacja in parametry:
         draw.text((xpos, MARG_Y + 10), "  "+str(stacja[0]), font=f_)
-        draw.text((xpos+80, MARG_Y + 80), str(stacja[1]), font=f_temp)
+        draw.text((xpos+80, MARG_Y + 70), str(stacja[1]), font=f_temp)
         obraz.paste(powietrze, (int(xpos), int(MARG_Y + 50)))
 
-        draw.text((xpos+80, MARG_Y + 130), str(stacja[2]), font=f_temp)
-        obraz.paste(asfalt, (int(xpos), int(MARG_Y + 100)))
+        draw.text((xpos+80, MARG_Y + 140), str(stacja[2]), font=f_temp)
+        obraz.paste(asfalt, (int(xpos), int(MARG_Y + 120)))
         draw.text((xpos, MARG_Y + 270), "Jezdnia " + str(stacja[4]), font=f_)
         tempstring=str(stacja[1])
         tempfloat=float(tempstring[0:len(tempstring)-2])
