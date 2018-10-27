@@ -93,7 +93,7 @@ def rysujobraz():
     obraz = Image.new('1', (EPD_WIDTH, EPD_HEIGHT), 1)  # 1: clear the frame
     draw = ImageDraw.Draw(obraz)
     # czcionki
-    f_ = ImageFont.truetype('_ttf/OpenSans-Light.ttf', 15)
+    f_ = ImageFont.truetype('_ttf/OpenSans-Light.ttf', 18)
     f_temp = ImageFont.truetype('_ttf/OpenSans-Light.ttf', 20)
 
     f_cyfr = ImageFont.truetype('_ttf/ds_digi.ttf', 60)
@@ -126,7 +126,7 @@ def rysujobraz():
 
         draw.text((xpos+80, MARG_Y + 130), str(stacja[2]), font=f_temp)
         obraz.paste(asfalt, (int(xpos), int(MARG_Y + 100)))
-        draw.text((xpos, MARG_Y + 180), "Jezdnia " + str(stacja[4]), font=f_)
+        draw.text((xpos, MARG_Y + 270), "Jezdnia " + str(stacja[4]), font=f_)
         tempstring=str(stacja[1])
         tempfloat=float(tempstring[0:len(tempstring)-2])
 
@@ -163,8 +163,8 @@ def rysujobraz():
 
     draw.text((10, 0), miesiac[int(datetime.datetime.now().strftime('%-m'))], font=f_, fill=255)
     # draw.rectangle((0, 20, 100, 80))
-    draw.text((44, 20), datetime.datetime.now().strftime('%-d'), font=f_iso, fill=0)
-    draw.text((9, 60), dzientyg[datetime.datetime.now().weekday()], font=f_, fill=0)
+    draw.text((35, 20), datetime.datetime.now().strftime('%-d'), font=f_iso, fill=0)
+    draw.text((18, 60), dzientyg[datetime.datetime.now().weekday()], font=f_, fill=0)
 
     # Prostokat z godzina
     draw.text((EPD_WIDTH-150, 10), godzina, font=f_cyfr)
