@@ -13,14 +13,14 @@ print(URL)
 
 res = requests.get(URL)
 
-data=res.json()
+progn_data=res.json()
 
-temperatura = data['main']['temp']
-wiatr_pred = data['wind']['speed']
-wiatr_kier = data['wind']['deg']
+progn_temp = progn_data['main']['temp']
+progn_wiatr_pred = progn_data['wind']['speed']
+progn_wiatr_kier = progn_data['wind']['deg']
 
-ikona = data['weather'][0]['icon']
-icon_url='http://openweathermap.org/img/w/{}.png'.format(ikona)
+progn_ikona = progn_data['weather'][0]['icon']
+icon_url='http://openweathermap.org/img/w/{}.png'.format(progn_ikona)
 
-print('Aktualna temperatura: {}'.format(temperatura))
+print('Aktualna temperatura: {}'.format(progn_temp))
 print(icon_url)
