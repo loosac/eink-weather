@@ -8,7 +8,7 @@ EPD_WIDTH = 640
 EPD_HEIGHT = 384
 epd = epd7in5.EPD()
 epd.init()
-obraz = Image.open("tresc.jpg")
+obraz = Image.open("output.jpg")
 
 epd.display_frame(epd.get_frame_buffer(obraz))
 
